@@ -1,0 +1,10 @@
+/. NaneLineModFile
+	Insert.Line=Code insertion position (Python code will be inserted after this line)
+		Code=
+			Insert Python code...
+/. <InsertCode1>end
+	Insert.Line=Code insertion position (Python code will be inserted after this line)
+		Code=
+			Insert Python code...
+/. <InsertCode2>end
+/. end

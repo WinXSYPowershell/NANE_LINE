@@ -1,0 +1,131 @@
+/. NaneLineModFile
+Insert.Line=1
+    Code=
+        """
+        时间显示模块(time)
+        功能：显示当前系统时间，支持多种格式
+        作者：通义千问
+        版本：1.0
+        """
+        import datetime
+        import time as tm
+        
+        class TimeModule:
+            """时间模块类，提供各种时间显示功能"""
+            def __init__(self):
+                self.formats = {
+                    'default': '%Y-%m-%d %H:%M:%S',
+                    'date': '%Y-%m-%d',
+                    'time': '%H:%M:%S',
+                    'datetime': '%Y年%m月%d日 %H时%M分%S秒',
+                    'iso': '%Y-%m-%dT%H:%M:%S',
+                    'us': '%m/%d/%Y %I:%M:%S %p',
+                    'european': '%d.%m.%Y %H:%M:%S',
+                    'timestamp': 'timestamp'
+                }
+            
+            def get_current_time(self, format_type='default'):
+                """
+                获取当前时间
+                Args:
+                    format_type (str): 时间格式类型，默认为'default'
+                Returns:
+                    str: 格式化后的时间字符串
+                """
+                now = datetime.datetime.now()
+                if format_type == 'timestamp':
+                    return str(now.timestamp())
+                elif format_type in self.formats:
+                    return now.strftime(self.formats[format_type])
+                else:
+                    # 如果传入的是自定义格式，则直接使用
+                    try:
+                        return now.strftime(format_type)
+                    except:
+                        return now.strftime(self.formats['default'])
+            
+            def show_time(self, format_type='default'):
+                """
+                显示当前时间到控制台
+                Args:
+                    format_type (str): 时间格式类型
+                """
+                current_time = self.get_current_time(format_type)
+                print(f"当前时间: {current_time}")
+            
+            def list_formats(self):
+                """列出所有支持的时间格式"""
+                print("支持的时间格式:")
+                for key, value in self.formats.items():
+                    example = self.get_current_time(key)
+                    print(f" {key}: {example} (格式: {value})")
+            
+            def get_timestamp(self):
+                """获取时间戳"""
+                return datetime.datetime.now().timestamp()
+            
+            def convert_timestamp(self, timestamp):
+                """将时间戳转换为可读时间"""
+                dt = datetime.datetime.fromtimestamp(timestamp)
+                return dt.strftime(self.formats['default'])
+        
+        def main():
+            """主函数，模拟命令行time命令的行为"""
+            time_module = TimeModule()
+            import sys
+            if len(sys.argv) > 1:
+                command = sys.argv[1]
+                if command == '-h' or command == '--help':
+                    print("时间显示模块使用说明:")
+                    print(" python time.py # 显示默认格式时间")
+                    print(" python time.py date # 只显示日期")
+                    print(" python time.py time # 只显示时间")
+                    print(" python time.py datetime # 中文格式时间")
+                    print(" python time.py iso # ISO 8601格式")
+                    print(" python time.py us # 美国格式")
+                    print(" python time.py european # 欧洲格式")
+                    print(" python time.py timestamp # 时间戳格式")
+                    print(" python time.py formats # 列出所有格式")
+                    print(" python time.py -h, --help # 显示此帮助信息")
+                elif command == 'formats':
+                    time_module.list_formats()
+                else:
+                    time_module.show_time(command)
+            else:
+                # 默认行为：显示当前时间
+                time_module.show_time()
+        
+        # 以下是一些示例用法
+        if __name__ == "__main__":
+            # 创建时间模块实例
+            time_mod = TimeModule()
+            print("=== Python时间显示模块演示 ===")
+            print()
+            # 显示不同格式的时间
+            print("1. 默认格式:")
+            time_mod.show_time('default')
+            print("\n2. 仅日期:")
+            time_mod.show_time('date')
+            print("\n3. 仅时间:")
+            time_mod.show_time('time')
+            print("\n4. 中文格式:")
+            time_mod.show_time('datetime')
+            print("\n5. ISO 8601格式:")
+            time_mod.show_time('iso')
+            print("\n6. 美国格式:")
+            time_mod.show_time('us')
+            print("\n7. 欧洲格式:")
+            time_mod.show_time('european')
+            print("\n8. 时间戳格式:")
+            time_mod.show_time('timestamp')
+            print("\n9. 自定义格式示例 (Weekday Month Day HH:MM:SS Year):")
+            custom_format = '%A, %B %d, %Y %H:%M:%S'
+            print(f" 当前时间: {time_mod.get_current_time(custom_format)}")
+            print("\n10. 支持的所有格式:")
+            time_mod.list_formats()
+            print("\n11. 命令行模式演示:")
+            print(" 要使用命令行模式，请运行: python time.py [格式]")
+            print(" 例如: python time.py iso")
+            print("\n=== 模块功能测试完成 ===")
+/. <插入代码1>end
+/. end
